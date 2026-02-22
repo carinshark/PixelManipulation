@@ -5,3 +5,9 @@ PLAN
     https://www.geeksforgeeks.org/python/python-pillow-tutorial/
 
     pillow!
+
+2. convert pixels to array to manipulate
+
+3. figure out sorting order
+
+4. make sorter
