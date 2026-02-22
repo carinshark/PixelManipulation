@@ -5,5 +5,3 @@ PLAN
     https://www.geeksforgeeks.org/python/python-pillow-tutorial/
 
     pillow!
-
-2. learn pillow
