@@ -4,7 +4,7 @@ import numpy as np
 
 
 
-creechur = Pixelgrid("images1/ship.png")
+creechur = Pixelgrid("images1/example.png")
 
 grid = creechur.grid
 # creechur.show()
@@ -16,16 +16,19 @@ grid = creechur.grid
 
 
 
-sorted=False
+is_sorted=False
 iterations=0
 
-while (not sorted):
-    iterations+=1
-    sorted=True
+while (is_sorted):
+    is_sorted=True
     for i in range(2):
-        for row in range(i,creechur.rows-i,2):
+        iterations+=1
+        print(iterations)
+        for row in range(i,creechur.rows-1,2):
+            
             
             for col in range(creechur.columns):
+                
                 pixela=np.copy(grid[row,col])
                 pixelb=np.copy(grid[row+1,col])
                 
@@ -43,7 +46,7 @@ while (not sorted):
                             grid[row+1,col]=pixelb
         
                             # print(grid[row,col],grid[row+1,col],3)
-                            sorted=False
+                            is_sorted=False
 
                         break
 
@@ -51,6 +54,8 @@ while (not sorted):
 
 
 
-        creechur.save(f"sortedImages/{iterations*2+i}.png")
+        creechur.save(f"sortedImages/{iterations}.png")
+    
+    
 
 creechur.show()
