@@ -10,9 +10,9 @@ class Pixelgrid:
 
         
         self.grid = np.array(self.image)
-        self.rows=self.image.size[0]
-        self.columns = self.image.size[1]
-        self.grid=self.grid.reshape((self.columns,self.rows,len(self.image.mode)))
+        self.columns=self.image.size[0]
+        self.rows = self.image.size[1]
+        self.grid=self.grid.reshape((self.rows,self.columns,len(self.image.mode)))
     
 
     def show(self):
