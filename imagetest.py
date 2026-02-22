@@ -4,7 +4,7 @@ import numpy as np
 
 
 
-creechur = Pixelgrid("images1/example.png")
+creechur = Pixelgrid("images1/electricCat.jpeg")
 
 grid = creechur.grid
 # creechur.show()
@@ -19,7 +19,7 @@ grid = creechur.grid
 is_sorted=False
 iterations=0
 
-while (is_sorted):
+while (not is_sorted):
     is_sorted=True
     for i in range(2):
         iterations+=1
@@ -32,7 +32,7 @@ while (is_sorted):
                 pixela=np.copy(grid[row,col])
                 pixelb=np.copy(grid[row+1,col])
                 
-                for val in range(pixela.size-1,-1,-1):
+                for val in range(pixela.size):
                     
                     if pixela[val]!=pixelb[val]:
                         if pixela[val]>pixelb[val]:
