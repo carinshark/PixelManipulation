@@ -1,0 +1,9 @@
+PLAN
+
+1. research python modules
+    https://docs.python-guide.org/scenarios/imaging/
+    https://www.geeksforgeeks.org/python/python-pillow-tutorial/
+
+    pillow!
+
+2. learn pillow
