@@ -1,29 +1,41 @@
 from PIL import Image
 import numpy as np
 
-im = Image.open("images1/boxes.png")
+im = Image.open("images1/ship.png")
 
 print(im.format,im.size,im.mode)
 
 
-# pixelGrid = np.array(im.getdata())
+pixelGrid = np.array(im)
 
-# print()
+print()
 
-# pixelGrid=pixelGrid.reshape((im.size[1],im.size[0],len(im.mode)))
-
-
-# print(pixelGrid)
-
-# # manipulate pixels here
+pixelGrid=pixelGrid.reshape((im.size[1],im.size[0],4))
 
 
-# # convert to image
 
-# pixelGrid = pixelGrid.reshape(im.size[0]*im.size[1],len(im.mode))
+# manipulate pixels here
 
-# newIm = Image.fromarray(pixelGrid,mode="RGBA")
+print(pixelGrid.shape)
 
-# newIm.show()
+for row in range(pixelGrid.shape[0]):
+    for column in range(pixelGrid.shape[1]):
+        pixel = pixelGrid[row,column]
+        r,g,b,a= tuple(pixel)
+
+        r,g,b= g,b,r
+
+
+        pixelGrid[row,column] = np.array((r,g,b,a))
+    
+    
+    
+
+# convert to image
+
+
+newIm = Image.fromarray(pixelGrid,mode="RGBA")
+
+newIm.show()
 
 
