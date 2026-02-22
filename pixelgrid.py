@@ -14,8 +14,16 @@ class Pixelgrid:
         self.rows = self.image.size[1]
         self.grid=self.grid.reshape((self.rows,self.columns,len(self.image.mode)))
     
+    def newImage(self):
+        self.image = Image.fromarray(self.grid,mode=self.image.mode)
 
     def show(self):
-        newIm = Image.fromarray(self.grid,mode=self.image.mode)
+        self.newImage()
 
-        newIm.show()
+        self.image.show()
+    
+    
+    def save(self,filename):
+        self.newImage()
+
+        self.image.save(filename)

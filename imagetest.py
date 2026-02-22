@@ -51,6 +51,6 @@ while (not sorted):
 
 
 
-        creechur.image.copy().save(f"sortedImages/{iterations*2+i}.png")
+        creechur.save(f"sortedImages/{iterations*2+i}.png")
 
 creechur.show()
