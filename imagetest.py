@@ -4,14 +4,13 @@ import numpy as np
 
 
 
-creechur = Pixelgrid("images1/electricCat.jpeg")
+creechur = Pixelgrid("images1/blues.jpg")
 
 grid = creechur.grid
 # creechur.show()
 
 
-#clear sorted images
-
+print(f"rows: {creechur.rows}")
 
 
 
@@ -54,7 +53,7 @@ while (not is_sorted):
 
 
 
-        creechur.save(f"sortedImages/{iterations}.png")
+        creechur.save(f"sortedImages/{iterations}.jpg")
     
     
 
