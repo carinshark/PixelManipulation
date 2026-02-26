@@ -2,12 +2,14 @@ from PIL import Image
 import numpy as np
 
 
+
 class Pixelgrid:
 
 
     def __init__(self,image_link:str):
         self.image = Image.open(image_link)
 
+        self.filetype =image_link[image_link.index("."):]
         
         self.grid = np.array(self.image)
         self.columns=self.image.size[0]

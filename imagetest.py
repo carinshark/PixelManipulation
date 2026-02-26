@@ -1,28 +1,32 @@
 from pixelgrid import Pixelgrid
+from guizero import App,Text,Picture,PushButton, select_file,question
 import numpy as np
 
 
+imageName = select_file("which image would you like to sort? RECOMMENDED TO USE SMALLER RESOLUTION PICS",filetypes=
+                                 [["images",[".png",".jpg",".jpeg"]]]
+                                 )
 
-
-creechur = Pixelgrid("images1/blues.jpg")
+creechur = Pixelgrid(imageName)
 
 grid = creechur.grid
 # creechur.show()
 
-
-print(f"rows: {creechur.rows}")
-
+size = creechur.image.size
 
 
 
-is_sorted=False
-iterations=0
 
-while (not is_sorted):
-    is_sorted=True
+
+
+def sortImage():
+
+    startButton.enabled=False
+    startButton.visible=False
+
+    imageSorted=True
     for i in range(2):
-        iterations+=1
-        print(iterations)
+        
         for row in range(i,creechur.rows-1,2):
             
             
@@ -45,16 +49,32 @@ while (not is_sorted):
                             grid[row+1,col]=pixelb
         
                             # print(grid[row,col],grid[row+1,col],3)
-                            is_sorted=False
+                            imageSorted=False
 
                         break
 
+
+        creechur.save(f"sortedImages/output{creechur.filetype}")
+        pic.image=f"sortedImages/output{creechur.filetype}"
+
+    if imageSorted:
+        print("done")
+        pic.cancel(sortImage)
+
+def startSort():
+    
+    pic.repeat(250,sortImage)
+    
     
 
+myApp = App(title="the app")
+
+title = Text(myApp,"sort image!",color="gray",size=24)
+
+pic = Picture(myApp,image=imageName,width=300,height=300)
+
+startButton = PushButton(myApp,command=startSort,text="Click to Start!")
 
 
-        creechur.save(f"sortedImages/{iterations}.jpg")
-    
-    
 
-creechur.show()
+myApp.display()
