@@ -2,7 +2,6 @@ from PIL import Image
 import numpy as np
 
 
-
 class Pixelgrid:
 
 
@@ -30,5 +29,27 @@ class Pixelgrid:
 
         self.image.save(filename)
     
+    def sortRow(self,row):
 
-    
+        for col in range(self.columns):
+                    
+                    pixela=np.copy(self.grid[row,col])
+                    pixelb=np.copy(self.grid[row+1,col])
+                    
+                    for val in range(pixela.size):
+                        
+                        if pixela[val]!=pixelb[val]:
+                            if pixela[val]>pixelb[val]:
+
+                                pixela,pixelb = np.copy(pixelb),np.copy(pixela)
+
+                                # print(pixela,pixelb,2)
+                                
+                                self.grid[row,col]=pixela
+                                
+                                self.grid[row+1,col]=pixelb
+            
+                                print(self.grid[row,col]is self.grid[row+1,col],3)
+                                
+
+                            break
