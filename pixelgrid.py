@@ -29,3 +29,6 @@ class Pixelgrid:
         self.newImage()
 
         self.image.save(filename)
+    
+
+    
