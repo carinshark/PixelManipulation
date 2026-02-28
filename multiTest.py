@@ -1,4 +1,4 @@
-from multiprocessing import Pool
+from multiprocessing import Process as Thread
 import random
 import time
 
@@ -6,16 +6,23 @@ x = [[(i,h) for i in range(10)] for h in range(10)]
 
 
 def get(row):
-    print("e",row)
+    time.sleep()
+    print(row)
+    return 1
 
 
+if __name__=="__main__":
+    a=[]
 
 
+    for i in range(10):
+        a.append(Thread(target=get,args=(i,)))
 
 
-if __name__ == '__main__':
-    for e in range(1):
-        with Pool(None) as p:
-            p.map(get,[i for i in range(20)])
-        time.sleep(2)
+    for i in range(10):
+        a[i].start()
+
+    for i in range(10):
+        (a[i].join())
+
     print("done")

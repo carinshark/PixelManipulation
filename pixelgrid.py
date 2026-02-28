@@ -30,11 +30,13 @@ class Pixelgrid:
         self.image.save(filename)
     
     def sortRow(self,row):
-
+        
+        grid1=np.copy(self.grid[row])
+        grid2 = np.copy(self.grid[row+1])
         for col in range(self.columns):
                     
-                    pixela=np.copy(self.grid[row,col])
-                    pixelb=np.copy(self.grid[row+1,col])
+                    pixela=np.copy(grid1[col])
+                    pixelb=np.copy(grid2[col])
                     
                     for val in range(pixela.size):
                         
@@ -45,11 +47,12 @@ class Pixelgrid:
 
                                 # print(pixela,pixelb,2)
                                 
-                                self.grid[row,col]=pixela
+                                grid1[col]=pixela
                                 
-                                self.grid[row+1,col]=pixelb
+                                grid2[col]=pixelb
             
-                                print(self.grid[row,col]is self.grid[row+1,col],3)
+                                # print(grid1[col]is grid2[col],3)
                                 
 
                             break
+        return (row,grid1,grid2)
