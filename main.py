@@ -1,41 +1,51 @@
 from pixelgrid import Pixelgrid
-from multiprocessing import Process as Thread
-import concurrent.futures
-from time import time
+from guizero import App,Text,Picture,PushButton, select_file,Box
 
-creechur = Pixelgrid("images1/blues.jpg")
+textColor = "#9cfff2"
+
+def playSort():
+    creechur.sortImage()
+
+def selectFile():
+    global creechur
+    file = select_file(filetypes=[["images",[".png",".jpg",".jpeg"]]])
+    if (file):
+        creechur=Pixelgrid(file)
+        pic.image=file
+
+def nextFrame():
+    creechur.sortOnce()
+
+def stopSort():
+    pass
 
 
 
-def sortOnce():
-    tstart = time()
-    for i in range(2):
-        allThreads=[]
-        
-        with concurrent.futures.ProcessPoolExecutor() as executor:
-            results = executor.map(creechur.sortRow,[row for row in range(i,creechur.rows-1,2)])
 
-            for f in results:
-                r=f
-                creechur.grid[r[0]]=r[1]
-                creechur.grid[r[0]+1]=r[2]
 
-        
-    
-    creechur.save(f"sortedImages/output{creechur.filetype}")
-    print(f"finishedd new in {time()-tstart}")
-    # self.pic.image=f"sortedImages/output{self.filetype}"
 
-def sortOnceOld():
-    tstart = time()
-    for i in range(2):
-        for row in range(i,creechur.rows-1,2):
-            creechur.sortRow(row)
 
-    creechur.save(f"sortedImages/output{creechur.filetype}")
+creechur = Pixelgrid("images1/ship.png")
 
-    print(f"finished in {time()-tstart}")
+myApp = App(title="the app",bg="#001C24")
 
-if (__name__=="__main__"):
-    sortOnce()
-    sortOnceOld()
+myApp.text_color=textColor
+
+title = Text(myApp,"sort image!",size=24)
+
+pic = Picture(myApp,image="images1/psuedo.png",width=300,height=300)
+
+
+idleBox = Box(myApp)
+runningBox = Box(myApp)
+
+startButton = PushButton(idleBox,command=playSort,
+                         text="Click to Start!",visible=False)
+
+nextFrameButton = PushButton(idleBox,command=nextFrame,text="next frame")
+
+fileButton = PushButton(idleBox,command=selectFile,text="Select Image (Try less than 500x500)")
+
+stopButton = PushButton(runningBox,command=stopSort,text="stop")
+
+myApp.display()

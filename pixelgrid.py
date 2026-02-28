@@ -1,6 +1,6 @@
 from PIL import Image
 import numpy as np
-
+from time import time,sleep
 
 class Pixelgrid:
 
@@ -9,6 +9,7 @@ class Pixelgrid:
         self.image = Image.open(image_link)
 
         self.filetype =image_link[image_link.index("."):]
+        self.sleepTime=1
         
         self.grid = np.array(self.image)
         self.columns=self.image.size[0]
@@ -31,28 +32,51 @@ class Pixelgrid:
     
     def sortRow(self,row):
         
-        grid1=np.copy(self.grid[row])
-        grid2 = np.copy(self.grid[row+1])
+        rowSorted=False
+        grid1 = (self.grid[row])
+        grid2 = (self.grid[row+1])
         for col in range(self.columns):
                     
-                    pixela=np.copy(grid1[col])
-                    pixelb=np.copy(grid2[col])
-                    
-                    for val in range(pixela.size):
-                        
-                        if pixela[val]!=pixelb[val]:
-                            if pixela[val]>pixelb[val]:
-
-                                pixela,pixelb = np.copy(pixelb),np.copy(pixela)
-
-                                # print(pixela,pixelb,2)
-                                
-                                grid1[col]=pixela
-                                
-                                grid2[col]=pixelb
+            pixela=np.copy(grid1[col])
+            pixelb=np.copy(grid2[col])
             
-                                # print(grid1[col]is grid2[col],3)
-                                
+            for val in range(pixela.size):
+                
+                if pixela[val]!=pixelb[val]:
+                    if pixela[val]>pixelb[val]:
 
-                            break
-        return (row,grid1,grid2)
+                        pixela,pixelb = np.copy(pixelb),np.copy(pixela)
+
+                        # print(pixela,pixelb,2)
+                        
+                        grid1[col]=pixela
+                        
+                        grid2[col]=pixelb
+                        
+                        rowSorted=True
+                        # print(grid1[col]is grid2[col],3)
+                        
+
+                    break
+        return rowSorted
+    
+    def sortOnce(self):
+        tstart = time()
+        
+        isSorted=True
+        for i in range(2):
+            for row in range(i,self.rows-1,2):
+                if(self.sortRow(row)):
+                    isSorted=False
+
+        self.save(f"sortedImages/output{self.filetype}")
+
+        print(f"finished in {time()-tstart}")
+        return isSorted
+
+
+    def sortImage(self):
+        while (True):
+            if self.sortOnce():
+                break
+            sleep(self.sleepTime)
