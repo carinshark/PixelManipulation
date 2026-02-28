@@ -1,32 +1,46 @@
 from PIL import Image
+
 import numpy as np
 from time import time,sleep
 
 class Pixelgrid:
 
 
-    def __init__(self,image_link:str):
-        self.image = Image.open(image_link)
+    def __init__(self,image_link:str,maxHeight=500):
 
+        self.image = Image.open(image_link)
+        if self.image.size[0]>500:
+            print('resizing')
+            h=maxHeight
+            w=int((h/self.image.height)*self.image.width)
+            self.image=self.image.resize((w,h),resample=Image.Resampling.NEAREST)
+            
+
+        
         self.filetype =image_link[image_link.index("."):]
+        self.filename = image_link
         self.sleepTime=1
         
         self.grid = np.array(self.image)
         self.columns=self.image.size[0]
         self.rows = self.image.size[1]
         self.grid=self.grid.reshape((self.rows,self.columns,len(self.image.mode)))
+
+        
     
     def newImage(self):
         self.image = Image.fromarray(self.grid,mode=self.image.mode)
 
     def show(self):
         self.newImage()
+        
 
         self.image.show()
     
     
     def save(self,filename):
         self.newImage()
+        
 
         self.image.save(filename)
     
@@ -69,7 +83,8 @@ class Pixelgrid:
                 if(self.sortRow(row)):
                     isSorted=False
 
-        self.save(f"sortedImages/output{self.filetype}")
+        self.newImage()
+        # self.save(f"sortedImages/output{self.filetype}")
 
         print(f"finished in {time()-tstart}")
         return isSorted
