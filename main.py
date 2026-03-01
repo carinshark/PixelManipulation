@@ -44,7 +44,7 @@ def sortCycle():
         stopSort()
 
 def updateImage():
-    if (creechur.image.size[0]>creechur.image.size[1]):
+    if (creechur.image.size[1]>creechur.image.size[0]):
         imgSize=(int((maxSize/creechur.image.height)*creechur.image.width),maxSize)
     else:
         imgSize=(maxSize,int((maxSize/creechur.image.width)*creechur.image.height))
@@ -118,7 +118,7 @@ def updateResolutionText():
     maxResText.value = f"Actual Max Pixel Size: {creechur.maxResolution}px"
 
 
-creechur=Pixelgrid(maxSize=64)
+creechur=Pixelgrid()
 
 myApp = App(title="the app",bg="#4E6E58",width=700,height=600)
 myApp.text_color=textColor
@@ -152,23 +152,23 @@ idleBox = Box(myApp,layout="grid")
 
 startButton = PushButton(idleBox,command=playSort,
                          text="Click to Start!",
-                         image="sprites/PlayButton.png",
+                         image="_internal/PlayButton.png",
                          grid=[0,0],
                          width=buttonSize,height=buttonSize)
 nextFrameButton = PushButton(idleBox,command=nextFrame,
                              text="next frame",
-                             image="sprites/nextButton.png",
+                             image="_internal/nextButton.png",
                              grid=[1,0],
                              width=buttonSize,height=buttonSize)
 fileButton = PushButton(idleBox,command=selectFile,
                         text="Select Image",
-                        image="sprites/folderButton.png",
+                        image="_internal/folderButton.png",
                         grid=[2,0],
                         width=buttonSize,height=buttonSize)
 
 downloadButton = PushButton(idleBox,command=downloadCurrent,
                             text="Download Image",
-                            image="sprites/downloadButton.png",
+                            image="_internal/downloadButton.png",
                             grid=[3,0],
                             width=buttonSize,height=buttonSize
                             )
@@ -178,7 +178,7 @@ runningBox = Box(myApp,layout="grid",visible=False)
 
 stopButton = PushButton(runningBox,command=stopSort
                         ,text="stop",
-                        image="sprites/cancelButton.png",
+                        image="_internal/cancelButton.png",
                         grid=[0,0],
                         width=buttonSize,height=buttonSize)
 

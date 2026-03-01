@@ -7,7 +7,7 @@ import random
 class Pixelgrid:
 
 
-    def __init__(self,image_link=None,maxSize=200):
+    def __init__(self,image_link=None,maxSize=100):
         
         if image_link==None:
             image_link=".png"
@@ -20,15 +20,16 @@ class Pixelgrid:
             self.wasRandom=False
 
 
-        if self.image.size[1]>maxSize:
-            h=maxSize
-            w=int((h/self.image.height)*self.image.width)
-            self.image=self.image.resize((w,h),resample=Image.Resampling.NEAREST)
-        elif self.image.size[0]>maxSize:
-            w=maxSize
-            h=int((w/self.image.width)*self.image.height)
+        if self.image.size[0]>maxSize or self.image.size[1]>maxSize:
+            if self.image.size[1]>self.image.size[0]:
+                h=maxSize
+                w=int((h/self.image.height)*self.image.width)
+                self.image=self.image.resize((w,h),resample=Image.Resampling.NEAREST)
+            else:
+                w=maxSize
+                h=int((w/self.image.width)*self.image.height)
 
-            self.image=self.image.resize((w,h),resample=Image.Resampling.NEAREST)
+                self.image=self.image.resize((w,h),resample=Image.Resampling.NEAREST)
             
         
         
@@ -68,25 +69,30 @@ class Pixelgrid:
                     
             pixela=np.copy(grid1[col])
             pixelb=np.copy(grid2[col])
+            avgA=np.average(pixela)
+            avgB=np.average(pixelb)
             
             for val in range(pixela.size):
                 
                 if pixela[val]!=pixelb[val]:
                     if pixela[val]>pixelb[val]:
 
-                        pixela,pixelb = np.copy(pixelb),np.copy(pixela)
-
-                        # print(pixela,pixelb,2)
-                        
+                        pixela,pixelb = np.copy(pixelb),np.copy(pixela)                        
                         grid1[col]=pixela
                         
                         grid2[col]=pixelb
                         
                         rowSorted=True
-                        # print(grid1[col]is grid2[col],3)
-                        
-
                     break
+            # if avgA!=avgB:
+            #     if avgA>avgB:
+
+            #         pixela,pixelb = np.copy(pixelb),np.copy(pixela)                        
+            #         grid1[col]=pixela
+                    
+            #         grid2[col]=pixelb
+                    
+            #         rowSorted=True
         return rowSorted
     
     def sortOnce(self):
