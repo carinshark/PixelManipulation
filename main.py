@@ -123,7 +123,7 @@ def updateRenderText():
 def updateResolutionText():
     maxResText.value = f"Actual Max Pixel Size: {creechur.maxResolution}px"
 
-creechur=Pixelgrid("sprites/ship.png")
+creechur=Pixelgrid("_internal/sprites/ship.png")
 
 myApp = App(title="the app",bg="#4E6E58",width=700,height=600)
 myApp.text_color=textColor
@@ -132,8 +132,7 @@ menu = MenuBar(myApp,
                toplevel=["File","Settings","Help"],
                options=[
                    [["New Image",selectFile],
-                    ["Reset Image",resetImage],
-                    ["Exit",exitApp]
+                    ["Reset Image",resetImage]
                     ],
 
                    [["Actual Pixel Size",changeResolution],
@@ -157,23 +156,23 @@ idleBox = Box(myApp,layout="grid")
 
 startButton = PushButton(idleBox,command=playSort,
                          text="Click to Start!",
-                         image="sprites/PlayButton.png",
+                         image="_internal/sprites/PlayButton.png",
                          grid=[0,0],
                          width=buttonSize,height=buttonSize)
 nextFrameButton = PushButton(idleBox,command=nextFrame,
                              text="next frame",
-                             image="sprites/nextButton.png",
+                             image="_internal/sprites/nextButton.png",
                              grid=[1,0],
                              width=buttonSize,height=buttonSize)
 fileButton = PushButton(idleBox,command=selectFile,
                         text="Select Image",
-                        image="sprites/folderButton.png",
+                        image="_internal/sprites/folderButton.png",
                         grid=[2,0],
                         width=buttonSize,height=buttonSize)
 
 downloadButton = PushButton(idleBox,command=downloadCurrent,
                             text="Download Image",
-                            image="sprites/downloadButton.png",
+                            image="_internal/sprites/downloadButton.png",
                             grid=[3,0],
                             width=buttonSize,height=buttonSize
                             )
@@ -183,7 +182,7 @@ runningBox = Box(myApp,layout="grid",visible=False)
 
 stopButton = PushButton(runningBox,command=stopSort
                         ,text="stop",
-                        image="sprites/cancelButton.png",
+                        image="_internal/sprites/cancelButton.png",
                         grid=[0,0],
                         width=buttonSize,height=buttonSize)
 
