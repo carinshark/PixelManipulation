@@ -2,18 +2,29 @@ from PIL import Image
 
 import numpy as np
 from time import time,sleep
+import random
 
 class Pixelgrid:
 
 
-    def __init__(self,image_link:str,maxSize=200):
+    def __init__(self,image_link=None,maxSize=200):
+        
+        if image_link==None:
+            image_link=".png"
+            self.wasRandom=True
+            self.image=Image.fromarray(
+                np.array([[[random.randint(0,255) for _ in range(3)
+                ] for _ in range(maxSize)] for _ in range(maxSize)],dtype="uint8"))
+        else:
+            self.image = Image.open(image_link)
+            self.wasRandom=False
 
-        self.image = Image.open(image_link)
-        if self.image.size[0]>maxSize:
+
+        if self.image.size[1]>maxSize:
             h=maxSize
             w=int((h/self.image.height)*self.image.width)
             self.image=self.image.resize((w,h),resample=Image.Resampling.NEAREST)
-        elif self.image.size[1]>maxSize:
+        elif self.image.size[0]>maxSize:
             w=maxSize
             h=int((w/self.image.width)*self.image.height)
 
