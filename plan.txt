@@ -11,3 +11,7 @@ PLAN
 3. figure out sorting order
 
 4. make sorter
+
+
+~~~~
+color pallete: https://coolors.co/181e25-2f2f2f-995fa3-a3d699-c5ebc3

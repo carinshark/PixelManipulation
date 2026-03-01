@@ -1,9 +1,13 @@
 from pixelgrid import Pixelgrid
-from guizero import App,Text,Picture,PushButton, select_file,Box
+from guizero import App,Text,Picture,PushButton,Text,Box,MenuBar
+from guizero import select_file,question,error
 from PIL import Image
+from webbrowser import open_new_tab as openurl
 
-textColor = "#9cfff2"
+textColor = "#C5EBC3"
 repeatTime = 250
+maxSize=300
+buttonSize=50
 
 def playSort():
     pic.repeat(repeatTime,sortCycle)
@@ -12,16 +16,15 @@ def playSort():
 
 
 def selectFile():
-    
+    stopSort()
     file = select_file(filetypes=[["images",[".png",".jpg",".jpeg"]]])
     if (file):
         switchImage(file)
 
 def switchImage(file):
+    
     global creechur
-    creechur=Pixelgrid(file)
-    pic.image=file
-    pic.width,pic.height=creechur.image.size
+    creechur=Pixelgrid(file,creechur.maxResolution)
     updateImage()
 
 def nextFrame():
@@ -40,28 +43,164 @@ def sortCycle():
         stopSort()
 
 def updateImage():
-    imgSize=(int((500/creechur.image.height)*creechur.image.width),500)
+    if (creechur.image.size[0]>creechur.image.size[1]):
+        imgSize=(int((maxSize/creechur.image.height)*creechur.image.width),maxSize)
+    else:
+        imgSize=(maxSize,int((maxSize/creechur.image.width)*creechur.image.height))
+
+    
     pic.image=creechur.image.resize(imgSize,resample=Image.Resampling.NEAREST)
 
     pic.width,pic.height=imgSize
 
+
+def updateSize():
+    a=getNumberInput()
+    if (a):
+        global maxSize
+        maxSize=a
+        updateImage()
+        updateRenderText()
+
+    
+
+def getNumberInput(text="Please enter a number!"):
+    try:
+        a = question("Number Input",text)
+        a=int(a)
+        return a
+    except ValueError:
+        error("WRONG!","Please enter a whole number greater than 1!")
+
+def exitApp():
+    exit()
+
+def changeResolution():
+    a=getNumberInput()
+    if (a):
+        global creechur
+        creechur=Pixelgrid(creechur.filename,a)
+        updateImage()
+        updateResolutionText()
+
+def githubLink():
+    openurl("https://github.com/carinshark/PixelManipulation")
+
+
+def frameTime():
+    a=getNumberInput("(in milliseconds btw)")
+    if a:
+        global repeatTime
+        repeatTime=a
+        stopSort()
+        updateRenderText()
+
+
+def downloadCurrent():
+    a=select_file("Choose where to save",
+                    filetypes=[[creechur.filetype,creechur.filetype]],
+                    save=True)
+    if (a):
+        a=a if (a.endswith(creechur.filetype)) else a+creechur.filetype
+        pic.image.save(a)
+
+def resetImage():
+    global creechur
+    creechur=Pixelgrid(creechur.filename,creechur.maxResolution)
+    updateImage()
+
+def updateRenderText():
+    renderText.value =f"Visually in: {maxSize}px, {repeatTime} ms between frames"
+
+def updateResolutionText():
+    maxResText.value = f"Actual Max Pixel Size: {creechur.maxResolution}px"
+
+
+
 creechur = Pixelgrid("images1/ship.png")
 
-myApp = App(title="the app",bg="#001C24",width=810,height=810)
+myApp = App(title="the app",bg="#4E6E58",width=700,height=600)
 myApp.text_color=textColor
+
+menu = MenuBar(myApp,
+               toplevel=["File","Settings","Help"],
+               options=[
+                   [["New Image",selectFile],
+                    ["Reset Image",resetImage],
+                    ["Exit",exitApp]
+                    ],
+
+                   [["Actual Pixel Size",changeResolution],
+                    ["Visual Pixel Size",updateSize],
+                    ["Time Between Frames",frameTime]
+                    ],
+
+                   [["View on Github",githubLink]]
+               ]
+               )
+
+
+
 
 title = Text(myApp,"sort image!",size=24)
 
 pic = Picture(myApp,image=creechur.image)
 updateImage()
 
-idleBox = Box(myApp)
-runningBox = Box(myApp)
+idleBox = Box(myApp,layout="grid")
 
 startButton = PushButton(idleBox,command=playSort,
-                         text="Click to Start!")
-nextFrameButton = PushButton(idleBox,command=nextFrame,text="next frame")
-fileButton = PushButton(idleBox,command=selectFile,text="Select Image (Try less than 500x500)")
-stopButton = PushButton(runningBox,command=stopSort,text="stop")
+                         text="Click to Start!",
+                         image="sprites/PlayButton.png",
+                         grid=[0,0],
+                         width=buttonSize,height=buttonSize)
+nextFrameButton = PushButton(idleBox,command=nextFrame,
+                             text="next frame",
+                             image="sprites/nextButton.png",
+                             grid=[1,0],
+                             width=buttonSize,height=buttonSize)
+fileButton = PushButton(idleBox,command=selectFile,
+                        text="Select Image",
+                        image="sprites/folderButton.png",
+                        grid=[2,0],
+                        width=buttonSize,height=buttonSize)
+
+downloadButton = PushButton(idleBox,command=downloadCurrent,
+                            text="Download Image",
+                            image="sprites/downloadButton.png",
+                            grid=[3,0],
+                            width=buttonSize,height=buttonSize
+                            )
+
+
+runningBox = Box(myApp,layout="grid",visible=False)
+
+stopButton = PushButton(runningBox,command=stopSort
+                        ,text="stop",
+                        image="sprites/cancelButton.png",
+                        grid=[0,0],
+                        width=buttonSize,height=buttonSize)
+
+
+infoBox = Box(myApp,layout="grid",align="bottom")
+
+infoText = Text(infoBox,
+                text="Higher resolution and faster framerates\n   may cause window to freeze. adjust accordingly     ",
+                grid=[0,0,1,2],size=12
+                )
+renderText = Text(infoBox,
+                  grid=[1,0,1,1],
+                  size=12
+                  )
+updateRenderText()
+
+maxResText = Text(infoBox,
+                  grid=[1,1,1,1],
+                  size=12
+                  )
+updateResolutionText()
+
+
+
 
 myApp.display()

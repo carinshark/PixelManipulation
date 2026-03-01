@@ -6,21 +6,25 @@ from time import time,sleep
 class Pixelgrid:
 
 
-    def __init__(self,image_link:str,maxHeight=500):
+    def __init__(self,image_link:str,maxSize=200):
 
         self.image = Image.open(image_link)
-        if self.image.size[0]>500:
-            print('resizing')
-            h=maxHeight
+        if self.image.size[0]>maxSize:
+            h=maxSize
             w=int((h/self.image.height)*self.image.width)
             self.image=self.image.resize((w,h),resample=Image.Resampling.NEAREST)
-            
+        elif self.image.size[1]>maxSize:
+            w=maxSize
+            h=int((w/self.image.width)*self.image.height)
 
+            self.image=self.image.resize((w,h),resample=Image.Resampling.NEAREST)
+            
+        
         
         self.filetype =image_link[image_link.index("."):]
         self.filename = image_link
         self.sleepTime=1
-        
+        self.maxResolution = maxSize
         self.grid = np.array(self.image)
         self.columns=self.image.size[0]
         self.rows = self.image.size[1]
