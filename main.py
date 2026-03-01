@@ -123,8 +123,7 @@ def updateRenderText():
 def updateResolutionText():
     maxResText.value = f"Actual Max Pixel Size: {creechur.maxResolution}px"
 
-"C:\\Users\\calvi\\OneDrive\\Documents\\UnityProjects\\PixelManipulation\\sprites\\"
-creechur=Pixelgrid("C:\\Users\\calvi\\OneDrive\\Documents\\UnityProjects\\PixelManipulation\\sprites\\ship.png")
+creechur=Pixelgrid("sprites/ship.png")
 
 myApp = App(title="the app",bg="#4E6E58",width=700,height=600)
 myApp.text_color=textColor
@@ -158,23 +157,23 @@ idleBox = Box(myApp,layout="grid")
 
 startButton = PushButton(idleBox,command=playSort,
                          text="Click to Start!",
-                         image="C:\\Users\\calvi\\OneDrive\\Documents\\UnityProjects\\PixelManipulation\\sprites\\PlayButton.png",
+                         image="sprites/PlayButton.png",
                          grid=[0,0],
                          width=buttonSize,height=buttonSize)
 nextFrameButton = PushButton(idleBox,command=nextFrame,
                              text="next frame",
-                             image="C:\\Users\\calvi\\OneDrive\\Documents\\UnityProjects\\PixelManipulation\\sprites\\nextButton.png",
+                             image="sprites/nextButton.png",
                              grid=[1,0],
                              width=buttonSize,height=buttonSize)
 fileButton = PushButton(idleBox,command=selectFile,
                         text="Select Image",
-                        image="C:\\Users\\calvi\\OneDrive\\Documents\\UnityProjects\\PixelManipulation\\sprites\\folderButton.png",
+                        image="sprites/folderButton.png",
                         grid=[2,0],
                         width=buttonSize,height=buttonSize)
 
 downloadButton = PushButton(idleBox,command=downloadCurrent,
                             text="Download Image",
-                            image="C:\\Users\\calvi\\OneDrive\\Documents\\UnityProjects\\PixelManipulation\\sprites\\downloadButton.png",
+                            image="sprites/downloadButton.png",
                             grid=[3,0],
                             width=buttonSize,height=buttonSize
                             )
@@ -184,7 +183,7 @@ runningBox = Box(myApp,layout="grid",visible=False)
 
 stopButton = PushButton(runningBox,command=stopSort
                         ,text="stop",
-                        image="C:\\Users\\calvi\\OneDrive\\Documents\\UnityProjects\\PixelManipulation\\sprites\\cancelButton.png",
+                        image="sprites/cancelButton.png",
                         grid=[0,0],
                         width=buttonSize,height=buttonSize)
 
