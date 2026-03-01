@@ -5,10 +5,16 @@ from PIL import Image
 from webbrowser import open_new_tab as openurl
 
 
+
 textColor = "#C5EBC3"
 repeatTime = 150
 maxSize=300
 buttonSize=50
+
+#images in numpy format cuz i cant figure out executables...
+
+
+
 
 def playSort():
     pic.repeat(repeatTime,sortCycle)
@@ -152,23 +158,23 @@ idleBox = Box(myApp,layout="grid")
 
 startButton = PushButton(idleBox,command=playSort,
                          text="Click to Start!",
-                         image="_internal/PlayButton.png",
+                         image="sprites/PlayButton.png",
                          grid=[0,0],
                          width=buttonSize,height=buttonSize)
 nextFrameButton = PushButton(idleBox,command=nextFrame,
                              text="next frame",
-                             image="_internal/nextButton.png",
+                             image="sprites/nextButton.png",
                              grid=[1,0],
                              width=buttonSize,height=buttonSize)
 fileButton = PushButton(idleBox,command=selectFile,
                         text="Select Image",
-                        image="_internal/folderButton.png",
+                        image="sprites/folderButton.png",
                         grid=[2,0],
                         width=buttonSize,height=buttonSize)
 
 downloadButton = PushButton(idleBox,command=downloadCurrent,
                             text="Download Image",
-                            image="_internal/downloadButton.png",
+                            image="sprites/downloadButton.png",
                             grid=[3,0],
                             width=buttonSize,height=buttonSize
                             )
@@ -178,7 +184,7 @@ runningBox = Box(myApp,layout="grid",visible=False)
 
 stopButton = PushButton(runningBox,command=stopSort
                         ,text="stop",
-                        image="_internal/cancelButton.png",
+                        image="sprites/cancelButton.png",
                         grid=[0,0],
                         width=buttonSize,height=buttonSize)
 
