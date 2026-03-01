@@ -4,10 +4,17 @@ from guizero import select_file,question,error
 from PIL import Image
 from webbrowser import open_new_tab as openurl
 
+
+
 textColor = "#C5EBC3"
-repeatTime = 250
+repeatTime = 150
 maxSize=300
 buttonSize=50
+
+#images in numpy format cuz i cant figure out executables...
+
+
+
 
 def playSort():
     pic.repeat(repeatTime,sortCycle)
@@ -43,7 +50,7 @@ def sortCycle():
         stopSort()
 
 def updateImage():
-    if (creechur.image.size[0]>creechur.image.size[1]):
+    if (creechur.image.size[1]>creechur.image.size[0]):
         imgSize=(int((maxSize/creechur.image.height)*creechur.image.width),maxSize)
     else:
         imgSize=(maxSize,int((maxSize/creechur.image.width)*creechur.image.height))
@@ -106,8 +113,9 @@ def downloadCurrent():
 
 def resetImage():
     global creechur
-    creechur=Pixelgrid(creechur.filename,creechur.maxResolution)
-    updateImage()
+    if not creechur.wasRandom:
+        creechur=Pixelgrid(creechur.filename,creechur.maxResolution)
+        updateImage()
 
 def updateRenderText():
     renderText.value =f"Visually in: {maxSize}px, {repeatTime} ms between frames"
@@ -115,9 +123,7 @@ def updateRenderText():
 def updateResolutionText():
     maxResText.value = f"Actual Max Pixel Size: {creechur.maxResolution}px"
 
-
-
-creechur = Pixelgrid("images1/ship.png")
+creechur=Pixelgrid("sprites/ship.png")
 
 myApp = App(title="the app",bg="#4E6E58",width=700,height=600)
 myApp.text_color=textColor
