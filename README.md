@@ -2,7 +2,7 @@
 
 <img width="868" height="814" alt="image" src="https://github.com/user-attachments/assets/6d4ec4e0-bc83-4f43-981e-f91d7a64873e" />
 
-## Dependencies (modules required)
+### Dependencies (modules required)
 (if youre running the python files directly)
 - numpy
 - guizero
